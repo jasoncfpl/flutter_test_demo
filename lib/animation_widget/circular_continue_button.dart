@@ -67,9 +67,13 @@ class CircleContinueButtonState extends State<CircleContinueButton> {
         await widget.onContinueSend?.call();
         _startTimer();
       },
-      child: CircularProgressIndicator(
-        ///当前指示的进度 0.0 -1.0
-        value: _counter / duration,
+      child: SizedBox(
+        width: 100,
+        height: 100,
+        child: CircularProgressIndicator(
+          ///当前指示的进度 0.0 -1.0
+          value: _counter / duration,
+        ),
       ),
     );
   }
