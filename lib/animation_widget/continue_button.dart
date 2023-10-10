@@ -94,16 +94,17 @@ class ContinueButtonPainter extends CustomPainter {
 
   ContinueButtonPainter(this.maxTime, this.currentTime)
       : painter = Paint()
+          ..strokeCap = StrokeCap.round
           ..strokeWidth = 4.w
           ..style = PaintingStyle.stroke;
 
   @override
   void paint(Canvas canvas, Size size) {
     Rect rect = Offset.zero & size;
-    painter.color = const Color(0xFFFF4B96);
+    painter.color = Colors.white;
     canvas.drawOval(rect, painter);
 
-    painter.color = Colors.white;
+    painter.color = const Color(0xFFFF4B96);
     double progress = currentTime / maxTime;
     canvas.drawArc(rect, -pi / 2, progress * 2 * pi, false, painter);
   }
