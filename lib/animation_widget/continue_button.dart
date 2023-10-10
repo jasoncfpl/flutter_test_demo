@@ -32,7 +32,7 @@ class ContinueButton extends StatelessWidget {
             buildCenterWidget(),
             CustomPaint(
               size: size,
-              painter: _PrivateAlbumRecordPainter(maxTime, currentTime),
+              painter: ContinueButtonPainter(maxTime, currentTime),
             ),
           ],
         ),
@@ -91,12 +91,12 @@ class ContinueButton extends StatelessWidget {
   }
 }
 
-class _PrivateAlbumRecordPainter extends CustomPainter {
+class ContinueButtonPainter extends CustomPainter {
   final int maxTime;
   final int currentTime;
   final Paint painter;
 
-  _PrivateAlbumRecordPainter(this.maxTime, this.currentTime)
+  ContinueButtonPainter(this.maxTime, this.currentTime)
       : painter = Paint()
           ..strokeWidth = 4.w
           ..style = PaintingStyle.stroke;
@@ -113,8 +113,8 @@ class _PrivateAlbumRecordPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    _PrivateAlbumRecordPainter oldPainter =
-        oldDelegate as _PrivateAlbumRecordPainter;
+    ContinueButtonPainter oldPainter =
+        oldDelegate as ContinueButtonPainter;
     return maxTime != oldDelegate.maxTime ||
         currentTime != oldPainter.currentTime;
   }

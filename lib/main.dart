@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_test_demo/page/test_continue_page.dart';
+import 'package:flutter_test_demo/page/test_loop_page.dart';
 import 'package:flutter_test_demo/page/test_visiable_page.dart';
 
 void main() {
@@ -124,6 +125,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   ));
                 },
                 child: const Text("ContinuePage")),
+            OutlinedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (ctx) => const FutureLoopTestPage(),
+                  ));
+                },
+                child: const Text("FutureLoopTestPage")),
           ],
         ),
       ),
