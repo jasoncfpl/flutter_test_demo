@@ -8,17 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ContinueButton extends StatefulWidget {
-  final Size size;
-  final int maxTime; //单位：ms
-  final int currentTime; //单位：ms
 
-  const ContinueButton({
-    Key? key,
-    required this.size,
-    required this.maxTime,
-    required this.currentTime,
-  })  : assert(currentTime >= 0),
-        super(key: key);
+  final Size size;
+  const ContinueButton({Key? key, required this.size,}) :super(key: key);
 
 
   @override
@@ -32,6 +24,44 @@ class ContinueButtonState extends State<ContinueButton> {
   ///声明变量
   Timer? _timer;
 
+  int _counter = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _startTimer();
+  }
+
+
+  @override
+  void dispose() {
+    super.dispose();
+    _stopTimer();
+  }
+
+  void _startTimer() {
+    _stopTimer();
+    ///循环执行
+    ///间隔1秒
+    _counter = 0;
+    _timer = Timer.periodic(const Duration(milliseconds: 50), (timer) {
+      ///自增
+      _counter += 50;
+      ///到5秒后停止
+      if (_counter >= duration) {
+        _timer?.cancel();
+      }
+      if (mounted) {
+        setState(() {});
+      }
+
+    });
+  }
+
+  void _stopTimer() {
+    _timer?.cancel();
+    _timer = null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +71,7 @@ class ContinueButtonState extends State<ContinueButton> {
         buildCenterWidget(),
         CustomPaint(
           size: widget.size,
-          painter: ContinueButtonPainter(widget.maxTime, widget.currentTime),
+          painter: ContinueButtonPainter(duration, _counter),
         ),
       ],
     );
@@ -70,9 +100,10 @@ class ContinueButtonPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     Rect rect = Offset.zero & size;
-    painter.color = Colors.white;
-    canvas.drawOval(rect, painter);
     painter.color = const Color(0xFFFF4B96);
+    canvas.drawOval(rect, painter);
+
+    painter.color = Colors.white;
     double progress = currentTime / maxTime;
     canvas.drawArc(rect, -pi / 2, progress * 2 * pi, false, painter);
   }

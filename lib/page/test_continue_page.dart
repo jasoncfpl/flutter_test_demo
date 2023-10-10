@@ -32,8 +32,6 @@ class ContinuePageState extends State<ContinuePage> {
             SizedBox(height: 20,),
             ContinueButton(
               size: Size(72, 72),
-              maxTime: 15 * 1000,
-              currentTime: 2,
             ),
           ],
         )
