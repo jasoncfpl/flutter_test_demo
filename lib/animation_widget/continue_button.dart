@@ -2,7 +2,8 @@
 ///@version: v1.0
 ///@email: yanglang116@gmail.com
 import 'dart:async';
-import 'dart:math';
+import 'dart:developer';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -23,8 +24,12 @@ class ContinueButtonState extends State<ContinueButton> {
   final int duration = 2000;
   ///声明变量
   Timer? _timer;
-
+  //计时器
   int _counter = 0;
+
+  bool isLongPressing = false;
+
+  bool visible = true;
 
   @override
   void initState() {
@@ -50,6 +55,7 @@ class ContinueButtonState extends State<ContinueButton> {
       ///到5秒后停止
       if (_counter >= duration) {
         _timer?.cancel();
+        visible = false;
       }
       if (mounted) {
         setState(() {});
@@ -65,16 +71,63 @@ class ContinueButtonState extends State<ContinueButton> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return Visibility(
+        visible: visible,
+        child: Stack(
       alignment: Alignment.center,
       children: [
         buildCenterWidget(),
-        CustomPaint(
-          size: widget.size,
-          painter: ContinueButtonPainter(duration, _counter),
-        ),
+        GestureDetector(
+          onTap: () {
+            _startTimer();
+          },
+          onTapUp: (_) {
+            log("onTapUp");
+            isLongPressing = false;
+          },
+          onTapCancel: () {
+            log("onTapCancel");
+            isLongPressing = false;
+          },
+          onLongPressStart: (detail) {
+            log("onLongPressStart");
+            isLongPressing = true;
+            sendLoop();
+          },
+          onLongPressUp: () {
+            log("onLongPressUp");
+            isLongPressing = false;
+          },
+          onLongPressEnd: (detail) {
+            log("onLongPressEnd");
+            isLongPressing = false;
+          },
+          onLongPressCancel: () {
+            log("onLongPressCancel");
+            //触发一直连送，方便测试
+            isLongPressing = false;
+          },
+          child: CustomPaint(
+            size: widget.size,
+            painter: ContinueButtonPainter(duration, _counter),
+          ),
+        )
       ],
+    ),
     );
+  }
+
+  void sendLoop() async {
+    log("sendLoop isLongPressing:$isLongPressing");
+    if (!isLongPressing) return;
+    if (!mounted) return;
+    int time = DateTime.now().millisecondsSinceEpoch;
+    //网络请求处理
+    await Future.delayed(const Duration(milliseconds: 200));
+    int cost = DateTime.now().millisecondsSinceEpoch - time;
+    await Future.delayed(Duration(milliseconds: math.max(0, 200 - cost)), () {});
+    _startTimer();
+    sendLoop();
   }
 
   Widget buildCenterWidget() {
@@ -106,7 +159,7 @@ class ContinueButtonPainter extends CustomPainter {
 
     painter.color = const Color(0xFFFF4B96);
     double progress = currentTime / maxTime;
-    canvas.drawArc(rect, -pi / 2, progress * 2 * pi, false, painter);
+    canvas.drawArc(rect, -math.pi / 2, progress * 2 * math.pi, false, painter);
   }
 
   @override
