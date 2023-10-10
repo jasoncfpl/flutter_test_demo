@@ -17,10 +17,6 @@ class ContinuePage extends StatefulWidget {
 class ContinuePageState extends State<ContinuePage> {
 
 
-  int get maxRecordTime => 15 * 1000;
-
-  int get minRecordTime => 10 * 1000;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,8 +25,18 @@ class ContinuePageState extends State<ContinuePage> {
         // the App.build method, and use it to set our appbar title.
         title: const Text("ContinuePage"),
       ),
-      body: const Center(
-        child: CircleContinueButton(),
+      body: Center(
+        child: Column(
+          children: const [
+            CircleContinueButton(),
+            SizedBox(height: 20,),
+            ContinueButton(
+              size: Size(72, 72),
+              maxTime: 15 * 1000,
+              currentTime: 2,
+            ),
+          ],
+        )
       ),
     );
   }
