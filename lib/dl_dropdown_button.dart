@@ -5,23 +5,10 @@
 import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 
-import 'button_theme.dart';
-import 'colors.dart';
-import 'constants.dart';
-import 'debug.dart';
-import 'icons.dart';
-import 'ink_well.dart';
-import 'input_decorator.dart';
-import 'material.dart';
-import 'material_localizations.dart';
-import 'material_state.dart';
-import 'scrollbar.dart';
-import 'shadows.dart';
-import 'theme.dart';
 
 const Duration _kDropdownMenuDuration = Duration(milliseconds: 300);
 const double _kMenuItemHeight = kMinInteractiveDimension;
@@ -141,7 +128,7 @@ class _DropdownMenuItemButtonState<T> extends State<_DropdownMenuItemButton<T>> 
   }
 
   void _handleOnTap() {
-    final DropdownMenuItem<T> dropdownMenuItem = widget.route.items[widget.itemIndex].item!;
+    final DLDropdownMenuItem<T> dropdownMenuItem = widget.route.items[widget.itemIndex].item!;
 
     dropdownMenuItem.onTap?.call();
 
@@ -160,7 +147,7 @@ class _DropdownMenuItemButtonState<T> extends State<_DropdownMenuItemButton<T>> 
 
   @override
   Widget build(BuildContext context) {
-    final DropdownMenuItem<T> dropdownMenuItem = widget.route.items[widget.itemIndex].item!;
+    final DLDropdownMenuItem<T> dropdownMenuItem = widget.route.items[widget.itemIndex].item!;
     final CurvedAnimation opacity;
     final double unit = 0.5 / (widget.route.items.length + 1.5);
     if (widget.itemIndex == widget.route.selectedIndex) {
@@ -658,7 +645,7 @@ class _MenuItem<T> extends SingleChildRenderObjectWidget {
   }) : assert(onLayout != null), super(key: key, child: item);
 
   final ValueChanged<Size> onLayout;
-  final DropdownMenuItem<T>? item;
+  final DLDropdownMenuItem<T>? item;
 
   @override
   RenderObject createRenderObject(BuildContext context) {
@@ -728,11 +715,11 @@ class _DropdownMenuItemContainer extends StatelessWidget {
 ///
 /// The type `T` is the type of the value the entry represents. All the entries
 /// in a given menu must represent values with consistent types.
-class DropdownMenuItem<T> extends _DropdownMenuItemContainer {
+class DLDropdownMenuItem<T> extends _DropdownMenuItemContainer {
   /// Creates an item for a dropdown menu.
   ///
   /// The [child] argument is required.
-  const DropdownMenuItem({
+  const DLDropdownMenuItem({
     Key? key,
     this.onTap,
     this.value,
@@ -771,7 +758,7 @@ class DropdownButtonHideUnderline extends InheritedWidget {
   }) : assert(child != null),
         super(key: key, child: child);
 
-  /// Returns whether the underline of [DropdownButton] widgets should
+  /// Returns whether the underline of [DLDropdownButton] widgets should
   /// be hidden.
   static bool at(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<DropdownButtonHideUnderline>() != null;
@@ -826,7 +813,7 @@ class DropdownButtonHideUnderline extends InheritedWidget {
 ///    from displaying their underlines.
 ///  * [ElevatedButton], [TextButton], ordinary buttons that trigger a single action.
 ///  * <https://material.io/design/components/menus.html#dropdown-menu>
-class DropdownButton<T> extends StatefulWidget {
+class DLDropdownButton<T> extends StatefulWidget {
   /// Creates a dropdown button.
   ///
   /// The [items] must have distinct values. If [value] isn't null then it
@@ -850,7 +837,7 @@ class DropdownButton<T> extends StatefulWidget {
   /// The [dropdownColor] argument specifies the background color of the
   /// dropdown when it is open. If it is null, the current theme's
   /// [ThemeData.canvasColor] will be used instead.
-  DropdownButton({
+  DLDropdownButton({
     Key? key,
     required this.items,
     this.selectedItemBuilder,
@@ -880,7 +867,7 @@ class DropdownButton<T> extends StatefulWidget {
     // When adding new arguments, consider adding similar arguments to
     // DropdownButtonFormField.
   }) : assert(items == null || items.isEmpty || value == null ||
-      items.where((DropdownMenuItem<T> item) {
+      items.where((DLDropdownMenuItem<T> item) {
         return item.value == value;
       }).length == 1,
   "There should be exactly one item with [DropdownButton]'s value: "
@@ -899,7 +886,7 @@ class DropdownButton<T> extends StatefulWidget {
         _isFocused = false,
         super(key: key);
 
-  DropdownButton._formField({
+  DLDropdownButton._formField({
     Key? key,
     required this.items,
     this.selectedItemBuilder,
@@ -930,7 +917,7 @@ class DropdownButton<T> extends StatefulWidget {
     required bool isEmpty,
     required bool isFocused,
   }) : assert(items == null || items.isEmpty || value == null ||
-      items.where((DropdownMenuItem<T> item) {
+      items.where((DLDropdownMenuItem<T> item) {
         return item.value == value;
       }).length == 1,
   "There should be exactly one item with [DropdownButtonFormField]'s value: "
@@ -956,7 +943,7 @@ class DropdownButton<T> extends StatefulWidget {
   /// If the [onChanged] callback is null or the list of items is null
   /// then the dropdown button will be disabled, i.e. its arrow will be
   /// displayed in grey and it will not respond to input.
-  final List<DropdownMenuItem<T>>? items;
+  final List<DLDropdownMenuItem<T>>? items;
 
   /// The value of the currently selected [DropdownMenuItem].
   ///
@@ -1165,10 +1152,10 @@ class DropdownButton<T> extends StatefulWidget {
   final bool _isFocused;
 
   @override
-  State<DropdownButton<T>> createState() => _DropdownButtonState<T>();
+  State<DLDropdownButton<T>> createState() => _DropdownButtonState<T>();
 }
 
-class _DropdownButtonState<T> extends State<DropdownButton<T>> with WidgetsBindingObserver {
+class _DropdownButtonState<T> extends State<DLDropdownButton<T>> with WidgetsBindingObserver {
   int? _selectedIndex;
   _DropdownRoute<T>? _dropdownRoute;
   Orientation? _lastOrientation;
@@ -1225,7 +1212,7 @@ class _DropdownButtonState<T> extends State<DropdownButton<T>> with WidgetsBindi
 
 
   @override
-  void didUpdateWidget(DropdownButton<T> oldWidget) {
+  void didUpdateWidget(DLDropdownButton<T> oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.focusNode != oldWidget.focusNode) {
       oldWidget.focusNode?.removeListener(_handleFocusChanged);
@@ -1243,13 +1230,13 @@ class _DropdownButtonState<T> extends State<DropdownButton<T>> with WidgetsBindi
         || widget.items!.isEmpty
         || (widget.value == null &&
             widget.items!
-                .where((DropdownMenuItem<T> item) => item.enabled && item.value == widget.value)
+                .where((DLDropdownMenuItem<T> item) => item.enabled && item.value == widget.value)
                 .isEmpty)) {
       _selectedIndex = null;
       return;
     }
 
-    assert(widget.items!.where((DropdownMenuItem<T> item) => item.value == widget.value).length == 1);
+    assert(widget.items!.where((DLDropdownMenuItem<T> item) => item.value == widget.value).length == 1);
     for (int itemIndex = 0; itemIndex < widget.items!.length; itemIndex++) {
       if (widget.items![itemIndex].value == widget.value) {
         _selectedIndex = itemIndex;
@@ -1535,7 +1522,7 @@ class DropdownButtonFormField<T> extends FormField<T> {
   /// `autofocus`, and `decoration`  parameters must not be null.
   DropdownButtonFormField({
     Key? key,
-    required List<DropdownMenuItem<T>>? items,
+    required List<DLDropdownMenuItem<T>>? items,
     DropdownButtonBuilder? selectedItemBuilder,
     T? value,
     Widget? hint,
@@ -1566,7 +1553,7 @@ class DropdownButtonFormField<T> extends FormField<T> {
     // When adding new arguments, consider adding similar arguments to
     // DropdownButton.
   }) : assert(items == null || items.isEmpty || value == null ||
-      items.where((DropdownMenuItem<T> item) {
+      items.where((DLDropdownMenuItem<T> item) {
         return item.value == value;
       }).length == 1,
   "There should be exactly one item with [DropdownButton]'s value: "
@@ -1594,7 +1581,7 @@ class DropdownButtonFormField<T> extends FormField<T> {
             Theme.of(field.context).inputDecorationTheme,
           );
 
-          final bool showSelectedItem = items != null && items.where((DropdownMenuItem<T> item) => item.value == state.value).isNotEmpty;
+          final bool showSelectedItem = items != null && items.where((DLDropdownMenuItem<T> item) => item.value == state.value).isNotEmpty;
           bool isHintOrDisabledHintAvailable() {
             final bool isDropdownDisabled = onChanged == null || (items == null || items.isEmpty);
             if (isDropdownDisabled) {
@@ -1612,7 +1599,7 @@ class DropdownButtonFormField<T> extends FormField<T> {
             skipTraversal: true,
             child: Builder(builder: (BuildContext context) {
               return DropdownButtonHideUnderline(
-                child: DropdownButton<T>._formField(
+                child: DLDropdownButton<T>._formField(
                   items: items,
                   selectedItemBuilder: selectedItemBuilder,
                   value: state.value,
