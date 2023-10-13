@@ -21,7 +21,7 @@ class ContinueButton extends StatefulWidget {
 class ContinueButtonState extends State<ContinueButton> {
 
   //倒计时时长
-  final int duration = 2000;
+  final int duration = 50000;
   ///声明变量
   Timer? _timer;
   //计时器
@@ -154,18 +154,18 @@ class ContinueButtonPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     Rect rect = Offset.zero & size;
-    painter.color = Colors.white;
+
+    painter.color = Colors.transparent;
     canvas.drawOval(rect, painter);
 
     painter.color = const Color(0xFFFF4B96);
     double progress = currentTime / maxTime;
-    canvas.drawArc(rect, -math.pi / 2, progress * 2 * math.pi, false, painter);
+    canvas.drawArc(rect, -math.pi / 2, progress * 2 * math.pi, true, painter);
   }
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    ContinueButtonPainter oldPainter =
-        oldDelegate as ContinueButtonPainter;
+    ContinueButtonPainter oldPainter = oldDelegate as ContinueButtonPainter;
     return maxTime != oldDelegate.maxTime ||
         currentTime != oldPainter.currentTime;
   }

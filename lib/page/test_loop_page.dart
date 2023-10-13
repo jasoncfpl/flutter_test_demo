@@ -64,6 +64,8 @@ class FutureLoopTestPageState extends State<FutureLoopTestPage> {
                 children: [
                   ///圆形进度
                   CircularProgressIndicator(
+                    backgroundColor: Colors.red,
+                    color: Colors.white,
                     ///当前指示的进度 0.0 -1.0
                     value: curentTimer / 5000,
                   ),

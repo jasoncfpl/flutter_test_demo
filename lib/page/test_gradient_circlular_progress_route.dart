@@ -130,10 +130,13 @@ class GradientCircularProgressRouteState
                         ],
                       ),
                       GradientCircularProgressIndicator(
-                          colors: [Colors.blue.shade700, Colors.blue.shade200],
+                          colors: [Colors.red.shade700, Colors.red.shade200],
                           radius: 100.0,
                           stokeWidth: 20.0,
-                          value: _animationController.value),
+                          backgroundColor: Colors.blue,
+                          fullColor: Colors.yellow,
+                          value: _animationController.value
+                      ),
 
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16.0),
