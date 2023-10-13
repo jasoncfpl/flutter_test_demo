@@ -1,11 +1,17 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_test_demo/page/test_continue_page.dart';
 import 'package:flutter_test_demo/page/test_gradient_circlular_progress_route.dart';
 import 'package:flutter_test_demo/page/test_loop_page.dart';
 import 'package:flutter_test_demo/page/test_visiable_page.dart';
+import 'package:get/get.dart';
 
 void main() {
+
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -18,8 +24,15 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
       designSize: const Size(360, 690),
       builder: () {
-        return MaterialApp(
+        return GetMaterialApp(
           title: 'Flutter Demo',
+          locale: Get.locale,
+          supportedLocales: const [Locale.fromSubtags(languageCode: 'en'), Locale.fromSubtags(languageCode: 'zh'),],
+          localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
           theme: ThemeData(
             // This is the theme of your application.
             //
@@ -61,14 +74,15 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
   void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+    Get.updateLocale(const Locale("zh"));
+    // setState(() {
+    //   // This call to setState tells the Flutter framework that something has
+    //   // changed in this State, which causes it to rerun the build method below
+    //   // so that the display can reflect the updated values. If we changed
+    //   // _counter without calling setState(), then the build method would not be
+    //   // called again, and so nothing would appear to happen.
+    //   _counter++;
+    // });
   }
 
   @override
@@ -149,5 +163,17 @@ class _MyHomePageState extends State<MyHomePage> {
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    log("MyHomePage initState:$hashCode==${Get.locale}");
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    log("MyHomePage dispose:$hashCode");
   }
 }
