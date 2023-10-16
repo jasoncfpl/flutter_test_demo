@@ -2,7 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'dart:developer';
 import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
@@ -880,6 +879,7 @@ class DLDropdownButton<T> extends StatefulWidget {
     this.borderRadius,
     this.alwaysTop = false,
     this.marginTop = 0,
+    this.child,
     // When adding new arguments, consider adding similar arguments to
     // DropdownButtonFormField.
   }) : assert(items == null || items.isEmpty || value == null ||
@@ -931,6 +931,7 @@ class DLDropdownButton<T> extends StatefulWidget {
     this.borderRadius,
     this.alwaysTop = false,
     this.marginTop = 0,
+    this.child,
     required InputDecoration inputDecoration,
     required bool isEmpty,
     required bool isFocused,
@@ -1171,7 +1172,9 @@ class DLDropdownButton<T> extends StatefulWidget {
   //是否一直显示在 上方
   final bool alwaysTop;
   //与底部距离
-  final double marginTop ;
+  final double marginTop;
+  //选中布局
+  final Widget? child;
 
   @override
   State<DLDropdownButton<T>> createState() => _DropdownButtonState<T>();
@@ -1450,10 +1453,9 @@ class _DropdownButtonState<T> extends State<DLDropdownButton<T>> with WidgetsBin
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            if (widget.isExpanded)
-              Expanded(child: innerItemsWidget)
-            else
-              innerItemsWidget,
+            widget.child != null
+                ? widget.child!
+                : (widget.isExpanded ? Expanded(child: innerItemsWidget) : innerItemsWidget),
             IconTheme(
               data: IconThemeData(
                 color: _iconColor,

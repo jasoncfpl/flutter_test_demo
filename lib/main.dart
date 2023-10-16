@@ -181,6 +181,15 @@ class _MyHomePageState extends State<MyHomePage> {
                   dropdownValue = newValue.toString();
                 });
               },
+              child: Container(
+                color: Colors.blue,
+                child: Text(
+                  dropdownValue,
+                  style: const TextStyle(
+                    color: Colors.white
+                  ),
+                ),
+              ),
             ),
 
           ],
