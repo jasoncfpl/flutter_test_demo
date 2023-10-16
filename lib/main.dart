@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_test_demo/dl_dropdown_button.dart';
 import 'package:flutter_test_demo/page/test_continue_page.dart';
 import 'package:flutter_test_demo/page/test_gradient_circlular_progress_route.dart';
 import 'package:flutter_test_demo/page/test_loop_page.dart';
@@ -73,16 +74,17 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
+  String dropdownValue = "One";
+
   void _incrementCounter() {
-    Get.updateLocale(const Locale("zh"));
-    // setState(() {
-    //   // This call to setState tells the Flutter framework that something has
-    //   // changed in this State, which causes it to rerun the build method below
-    //   // so that the display can reflect the updated values. If we changed
-    //   // _counter without calling setState(), then the build method would not be
-    //   // called again, and so nothing would appear to happen.
-    //   _counter++;
-    // });
+    setState(() {
+      // This call to setState tells the Flutter framework that something has
+      // changed in this State, which causes it to rerun the build method below
+      // so that the display can reflect the updated values. If we changed
+      // _counter without calling setState(), then the build method would not be
+      // called again, and so nothing would appear to happen.
+      _counter++;
+    });
   }
 
   @override
@@ -154,6 +156,33 @@ class _MyHomePageState extends State<MyHomePage> {
                   ));
                 },
                 child: const Text("GradientCircularProgressRoute")),
+            DLDropdownButton(
+              dropdownColor: const Color(0xFF281E32),
+              items: <String>['One', 'Two', 'Free', 'Four'].map<DLDropdownMenuItem<String>>((String value) {
+                return DLDropdownMenuItem<String>(
+                  value: value,
+                  child: Text(
+                    value,
+                    style: const TextStyle(
+                        color: Colors.white
+                    ),
+                  ),
+                );
+              }).toList(),
+              underline: const SizedBox.shrink(),
+              icon: const SizedBox(),
+              value: dropdownValue,
+              alwaysTop: true,
+              hint: Container(color: Colors.red,),
+              disabledHint: Container(color: Colors.green,),
+              marginTop: 40,
+              onChanged: (newValue) {
+                setState(() {
+                  dropdownValue = newValue.toString();
+                });
+              },
+            ),
+
           ],
         ),
       ),

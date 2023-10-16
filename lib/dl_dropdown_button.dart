@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'dart:developer';
 import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
@@ -291,7 +292,7 @@ class _DropdownMenuState<T> extends State<_DropdownMenu<T>> {
                 child: Scrollbar(
                   thumbVisibility: true,
                   child: ListView(
-                    padding: kMaterialListPadding,
+                    // padding: kMaterialListPadding,
                     shrinkWrap: true,
                     children: children,
                   ),
@@ -413,6 +414,8 @@ class _DropdownRoute<T> extends PopupRoute<_DropdownRouteResult<T>> {
     this.menuMaxHeight,
     required this.enableFeedback,
     this.borderRadius,
+    this.alwaysTop = false,
+    this.marginTop = 0,
   }) : assert(style != null),
         itemHeights = List<double>.filled(items.length, itemHeight ?? kMinInteractiveDimension);
 
@@ -431,6 +434,9 @@ class _DropdownRoute<T> extends PopupRoute<_DropdownRouteResult<T>> {
 
   final List<double> itemHeights;
   ScrollController? scrollController;
+
+  final bool alwaysTop;
+  final double marginTop;
 
   @override
   Duration get transitionDuration => _kDropdownMenuDuration;
@@ -461,6 +467,8 @@ class _DropdownRoute<T> extends PopupRoute<_DropdownRouteResult<T>> {
           dropdownColor: dropdownColor,
           enableFeedback: enableFeedback,
           borderRadius: borderRadius,
+          alwaysTop: alwaysTop,
+          marginTop: marginTop,
         );
       },
     );
@@ -502,7 +510,6 @@ class _DropdownRoute<T> extends PopupRoute<_DropdownRouteResult<T>> {
     // or bottom edge of the button.
     final double topLimit = math.min(_kMenuItemHeight, buttonTop);
     final double bottomLimit = math.max(availableHeight - _kMenuItemHeight, buttonBottom);
-
     double menuTop = (buttonTop - selectedItemOffset) - (itemHeights[selectedIndex] - buttonRect.height) / 2.0;
     double preferredMenuHeight = kMaterialListPadding.vertical;
     if (items.isNotEmpty)
@@ -548,7 +555,6 @@ class _DropdownRoute<T> extends PopupRoute<_DropdownRouteResult<T>> {
       // set it instead to the maximum allowed scroll offset.
       scrollOffset = math.min(scrollOffset, preferredMenuHeight - menuHeight);
     }
-
     assert((menuBottom - menuTop - menuHeight).abs() < precisionErrorTolerance);
     return _MenuLimits(menuTop, menuBottom, menuHeight, scrollOffset);
   }
@@ -569,6 +575,8 @@ class _DropdownRoutePage<T> extends StatelessWidget {
     required this.dropdownColor,
     required this.enableFeedback,
     this.borderRadius,
+    this.alwaysTop = false,
+    this.marginTop = 0,
   }) : super(key: key);
 
   final _DropdownRoute<T> route;
@@ -583,6 +591,8 @@ class _DropdownRoutePage<T> extends StatelessWidget {
   final Color? dropdownColor;
   final bool enableFeedback;
   final BorderRadius? borderRadius;
+  final bool alwaysTop;
+  final double marginTop;
 
   @override
   Widget build(BuildContext context) {
@@ -609,6 +619,10 @@ class _DropdownRoutePage<T> extends StatelessWidget {
       enableFeedback: enableFeedback,
       borderRadius: borderRadius,
     );
+    Rect rect = Rect.fromLTRB(buttonRect.left, buttonRect.top, buttonRect.right, buttonRect.bottom);
+    if (alwaysTop) {
+      rect = Rect.fromLTRB(buttonRect.left, buttonRect.top - buttonRect.height - marginTop, buttonRect.right, buttonRect.bottom);
+    }
 
     return MediaQuery.removePadding(
       context: context,
@@ -620,7 +634,7 @@ class _DropdownRoutePage<T> extends StatelessWidget {
         builder: (BuildContext context) {
           return CustomSingleChildLayout(
             delegate: _DropdownMenuRouteLayout<T>(
-              buttonRect: buttonRect,
+              buttonRect: rect,
               route: route,
               textDirection: textDirection,
             ),
@@ -864,6 +878,8 @@ class DLDropdownButton<T> extends StatefulWidget {
     this.enableFeedback,
     this.alignment = AlignmentDirectional.centerStart,
     this.borderRadius,
+    this.alwaysTop = false,
+    this.marginTop = 0,
     // When adding new arguments, consider adding similar arguments to
     // DropdownButtonFormField.
   }) : assert(items == null || items.isEmpty || value == null ||
@@ -913,6 +929,8 @@ class DLDropdownButton<T> extends StatefulWidget {
     this.enableFeedback,
     this.alignment = AlignmentDirectional.centerStart,
     this.borderRadius,
+    this.alwaysTop = false,
+    this.marginTop = 0,
     required InputDecoration inputDecoration,
     required bool isEmpty,
     required bool isFocused,
@@ -1150,6 +1168,10 @@ class DLDropdownButton<T> extends StatefulWidget {
   final bool _isEmpty;
 
   final bool _isFocused;
+  //是否一直显示在 上方
+  final bool alwaysTop;
+  //与底部距离
+  final double marginTop ;
 
   @override
   State<DLDropdownButton<T>> createState() => _DropdownButtonState<T>();
@@ -1278,11 +1300,17 @@ class _DropdownButtonState<T> extends State<DLDropdownButton<T>> with WidgetsBin
     assert(_dropdownRoute == null);
     final RenderBox itemBox = context.findRenderObject()! as RenderBox;
     final Rect itemRect = itemBox.localToGlobal(Offset.zero, ancestor: navigator.context.findRenderObject()) & itemBox.size;
+
+    int index = _selectedIndex ?? 0;
+    if (widget.alwaysTop) {
+      index = menuItems.isNotEmpty ?  menuItems.length - 1 : 0;
+    }
+
     _dropdownRoute = _DropdownRoute<T>(
       items: menuItems,
       buttonRect: menuMargin.resolve(textDirection).inflateRect(itemRect),
       padding: _kMenuItemPadding.resolve(textDirection),
-      selectedIndex: _selectedIndex ?? 0,
+      selectedIndex: index,
       elevation: widget.elevation,
       capturedThemes: InheritedTheme.capture(from: context, to: navigator.context),
       style: _textStyle!,
@@ -1292,6 +1320,8 @@ class _DropdownButtonState<T> extends State<DLDropdownButton<T>> with WidgetsBin
       menuMaxHeight: widget.menuMaxHeight,
       enableFeedback: widget.enableFeedback ?? true,
       borderRadius: widget.borderRadius,
+      alwaysTop: widget.alwaysTop,
+      marginTop: widget.marginTop,
     );
 
     focusNode?.requestFocus();
