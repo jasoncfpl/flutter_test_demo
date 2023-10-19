@@ -74,7 +74,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
-  String dropdownValue = "One";
+  RxInt dropdownValue = 1.obs;
 
   void _incrementCounter() {
     setState(() {
@@ -158,11 +158,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: const Text("GradientCircularProgressRoute")),
             DLDropdownButton(
               dropdownColor: const Color(0xFF281E32),
-              items: <String>['One', 'Two', 'Free', 'Four'].map<DLDropdownMenuItem<String>>((String value) {
-                return DLDropdownMenuItem<String>(
+              items: <int>[1, 2, 3, 4].map<DLDropdownMenuItem<int>>((int value) {
+                return DLDropdownMenuItem<int>(
                   value: value,
                   child: Text(
-                    value,
+                    "$value",
                     style: const TextStyle(
                         color: Colors.white
                     ),
@@ -171,20 +171,18 @@ class _MyHomePageState extends State<MyHomePage> {
               }).toList(),
               underline: const SizedBox.shrink(),
               icon: const SizedBox(),
-              value: dropdownValue,
+              value: dropdownValue.value,
               alwaysTop: true,
               hint: Container(color: Colors.red,),
               disabledHint: Container(color: Colors.green,),
               marginTop: 40,
               onChanged: (newValue) {
-                setState(() {
-                  dropdownValue = newValue.toString();
-                });
+                dropdownValue.value = newValue as int;
               },
               child: Container(
                 color: Colors.blue,
                 child: Text(
-                  dropdownValue,
+                   "${dropdownValue.value}",
                   style: const TextStyle(
                     color: Colors.white
                   ),
