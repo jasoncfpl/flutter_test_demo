@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test_demo/page/animation_page/easy_animation_page.dart';
+import 'package:flutter_test_demo/page/animation_page/tween_animation_builder_page.dart';
+import 'package:flutter_test_demo/page/animation_page/tween_animation_page.dart';
 
 class TestAnimatePage extends StatefulWidget {
 
@@ -41,7 +43,21 @@ class TestAnimatePageState extends State<TestAnimatePage> {
                   builder: (ctx) => const EasyAnimatePage(),
                 ));
               },
-              child: const Text("EasyAnimatePage"))
+              child: const Text("EasyAnimatePage")),
+          OutlinedButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (ctx) => const TweenAnimatePage(),
+                ));
+              },
+              child: const Text("TweenAnimatePageState")),
+          OutlinedButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (ctx) => const TweenAnimationBuilderPage(),
+                ));
+              },
+              child: const Text("TweenAnimationBuilderPage"))
         ],
       ),
     );
