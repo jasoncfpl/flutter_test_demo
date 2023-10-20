@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_test_demo/dl_dropdown_button.dart';
+import 'package:flutter_test_demo/page/animation_page/test_animation_page.dart';
 import 'package:flutter_test_demo/page/test_continue_page.dart';
 import 'package:flutter_test_demo/page/test_gradient_circlular_progress_route.dart';
 import 'package:flutter_test_demo/page/test_list_widget_page.dart';
@@ -12,7 +13,6 @@ import 'package:flutter_test_demo/page/test_visiable_page.dart';
 import 'package:get/get.dart';
 
 void main() {
-
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
@@ -29,7 +29,10 @@ class MyApp extends StatelessWidget {
         return GetMaterialApp(
           title: 'Flutter Demo',
           locale: Get.locale,
-          supportedLocales: const [Locale.fromSubtags(languageCode: 'en'), Locale.fromSubtags(languageCode: 'zh'),],
+          supportedLocales: const [
+            Locale.fromSubtags(languageCode: 'en'),
+            Locale.fromSubtags(languageCode: 'zh'),
+          ],
           localizationsDelegates: const [
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
@@ -164,9 +167,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   value: value,
                   child: Text(
                     "$value",
-                    style: const TextStyle(
-                        color: Colors.white
-                    ),
+                    style: const TextStyle(color: Colors.white),
                   ),
                 );
               }).toList(),
@@ -174,8 +175,12 @@ class _MyHomePageState extends State<MyHomePage> {
               icon: const SizedBox(),
               value: dropdownValue.value,
               alwaysTop: true,
-              hint: Container(color: Colors.red,),
-              disabledHint: Container(color: Colors.green,),
+              hint: Container(
+                color: Colors.red,
+              ),
+              disabledHint: Container(
+                color: Colors.green,
+              ),
               marginTop: 40,
               onChanged: (newValue) {
                 dropdownValue.value = newValue as int;
@@ -183,14 +188,11 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Container(
                 color: Colors.blue,
                 child: Text(
-                   "${dropdownValue.value}",
-                  style: const TextStyle(
-                    color: Colors.white
-                  ),
+                  "${dropdownValue.value}",
+                  style: const TextStyle(color: Colors.white),
                 ),
               ),
             ),
-
             OutlinedButton(
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
@@ -198,7 +200,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   ));
                 },
                 child: const Text("TestListWidgetPage")),
-
+            OutlinedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (ctx) => const TestAnimatePage(),
+                  ));
+                },
+                child: const Text("TestAnimatePage")),
           ],
         ),
       ),
