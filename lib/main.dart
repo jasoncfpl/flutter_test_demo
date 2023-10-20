@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_test_demo/dl_dropdown_button.dart';
 import 'package:flutter_test_demo/page/test_continue_page.dart';
 import 'package:flutter_test_demo/page/test_gradient_circlular_progress_route.dart';
+import 'package:flutter_test_demo/page/test_list_widget_page.dart';
 import 'package:flutter_test_demo/page/test_loop_page.dart';
 import 'package:flutter_test_demo/page/test_visiable_page.dart';
 import 'package:get/get.dart';
@@ -189,6 +190,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ),
+
+            OutlinedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (ctx) => const TestListWidgetPage(),
+                  ));
+                },
+                child: const Text("TestListWidgetPage")),
 
           ],
         ),
