@@ -19,7 +19,7 @@ class TestListWidgetPageState extends State<TestListWidgetPage> {
   @override
   void initState() {
     super.initState();
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 2; i++) {
       list.add("Test$i");
     }
   }
@@ -32,36 +32,48 @@ class TestListWidgetPageState extends State<TestListWidgetPage> {
         // the App.build method, and use it to set our appbar title.
         title: const Text("TestListWidgetPage"),
       ),
-      body:  Stack(
-        children: list.map<Widget>((item) {
-          int index = list.indexOf(item);
-          return Positioned(
-            left: index * 15,
-              child: Container(
-              height: 30,
-              width: 30,
-              decoration: BoxDecoration(
-                color: Colors.black,
-                borderRadius: BorderRadius.circular(15),
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              height: 40,
+              color: Colors.redAccent,
+              child: Stack(
+                fit: StackFit.loose,
+                children: list.map<Widget>((item) {
+                  int index = list.indexOf(item);
+                  Color color = Colors.black;
+                  if (index % 2 == 1) {
+                    color = Colors.grey;
+                  }
+                    return Padding(
+                      padding: EdgeInsets.only(left: index * 15),
+                      child: Container(
+                        height: 30,
+                        width: 30,
+                        decoration: BoxDecoration(
+                          color: color,
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                    );
+                    // return Positioned(
+                  //     left: index * 15,
+                  //     width: 30,
+                  //     child: Container(
+                  //       height: 30,
+                  //       width: 30,
+                  //       decoration: BoxDecoration(
+                  //         color: Colors.black,
+                  //         borderRadius: BorderRadius.circular(15),
+                  //       ),
+                  //     ));
+                }).toList(),
               ),
-            ));
-          }).toList(),
-        // children: [
-        //   ...List.generate(
-        //     5,
-        //         (index) => Positioned(
-        //       left: index * 15,
-        //       child: Container(
-        //         height: 30,
-        //         width: 30,
-        //         decoration: BoxDecoration(
-        //           color: index.isEven ? Colors.black : Colors.grey,
-        //           borderRadius: BorderRadius.circular(15),
-        //         ),
-        //       ),
-        //     ),
-        //   ),
-        // ],
+            )
+          ],
+        ),
       )
     );
   }

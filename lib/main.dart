@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_test_demo/dl_dropdown_button.dart';
 import 'package:flutter_test_demo/page/animation_page/test_animation_page.dart';
 import 'package:flutter_test_demo/page/test_continue_page.dart';
+import 'package:flutter_test_demo/page/test_gesture_widget_page.dart';
 import 'package:flutter_test_demo/page/test_gradient_circlular_progress_route.dart';
 import 'package:flutter_test_demo/page/test_list_widget_page.dart';
 import 'package:flutter_test_demo/page/test_loop_page.dart';
@@ -89,6 +90,31 @@ class _MyHomePageState extends State<MyHomePage> {
       // called again, and so nothing would appear to happen.
       _counter++;
     });
+
+    String cvNew = "DLABROAD3.2.82_Android";
+    int cv1Index = cvNew.indexOf("_");
+    log("cv1Index : $cv1Index");
+    if (cv1Index >= 0) {
+      cvNew = cvNew.substring(0, cv1Index);
+    }
+    log("cvNew1 : $cvNew");
+    RegExp rgx = RegExp(r"\d+");
+    List<String?> ver1Arr = rgx.allMatches(cvNew).map((m) => m.group(0)).toList();
+    log("ver1Arr : $ver1Arr");
+
+    int ver1 = calVersionValue(ver1Arr);
+    log("ver1 : $ver1");
+  }
+
+  int calVersionValue(List<String?> cvArr) {
+    int verValue = 0;
+    int coe = 1;
+    for (int i = cvArr.length - 1; i >= 0; i--) {
+      int ver = int.tryParse(cvArr[i] ?? "0") ?? 0;
+      verValue += ver * coe;
+      coe *= 100;
+    }
+    return verValue;
   }
 
   @override
@@ -207,6 +233,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   ));
                 },
                 child: const Text("TestAnimatePage")),
+            OutlinedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (ctx) => const TestGestureDetectorPage(),
+                  ));
+                },
+                child: const Text("TestGestureDetectorPage")),
           ],
         ),
       ),
@@ -229,4 +262,6 @@ class _MyHomePageState extends State<MyHomePage> {
     super.dispose();
     log("MyHomePage dispose:$hashCode");
   }
+
+
 }
