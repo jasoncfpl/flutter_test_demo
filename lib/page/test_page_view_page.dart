@@ -19,14 +19,14 @@ class TestPageViewPageState extends State<TestPageViewPage> {
 
   List<String> list = ["Page1", "Page2", "Page3", "Page4", "Page5"];
 
-  PageController pageController = PageController();
+  PageController pageController = PageController(initialPage: 0);
+
+  int currentIndex = 0;
 
   @override
   void initState() {
     super.initState();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,6 @@ class TestPageViewPageState extends State<TestPageViewPage> {
           onPageChanged: (index){
           },
           onPageEndChanged: (index) async{
-            log('onPageEndChanged = $index');
             onPageEndChanged(index);
           },
           itemBuilder: (BuildContext context, int index) {
@@ -56,7 +55,11 @@ class TestPageViewPageState extends State<TestPageViewPage> {
   }
 
   onPageEndChanged(int index) {
-
+    if (currentIndex == index) {
+      return;
+    }
+    log('onPageEndChanged = $index');
+    currentIndex = index;
   }
 
 }

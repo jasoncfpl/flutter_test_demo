@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'room_controller.dart';
+
 class TestRoomPage extends StatefulWidget {
 
   final int roomIndex;
@@ -16,6 +18,23 @@ class TestRoomPage extends StatefulWidget {
 }
 
 class TestRoomPageState extends State<TestRoomPage> {
+
+  RoomController? controller;
+
+
+  @override
+  void initState() {
+    controller = RoomController(widget.roomIndex);
+    super.initState();
+    controller?.initState();
+  }
+
+
+  @override
+  void dispose() {
+    controller?.onDispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
