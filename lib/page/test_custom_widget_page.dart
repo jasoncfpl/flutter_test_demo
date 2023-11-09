@@ -70,7 +70,7 @@ class MyCustomPainter extends CustomPainter {
     // canvas.saveLayer(rectCircle1, myPaint);
     // canvas.restore();
     // myPaint.blendMode = BlendMode.clear;
-    myPaint..style = PaintingStyle.fill;
+    myPaint..style = PaintingStyle.fill;// 绘画风格，默认为填充
     // myPaint.color = const Color(0x1AFFEA00);
     myPaint.shader = ui.Gradient.linear(Offset(20, 0), Offset(size.width, 0), [Color(0x6693F249), Color(0xFF0BB682)]);
     canvas.drawRRect(rrect2, myPaint);
