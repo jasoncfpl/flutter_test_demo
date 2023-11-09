@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_test_demo/dl_dropdown_button.dart';
 import 'package:flutter_test_demo/page/animation_page/test_animation_page.dart';
 import 'package:flutter_test_demo/page/test_continue_page.dart';
+import 'package:flutter_test_demo/page/test_custom_widget_page.dart';
 import 'package:flutter_test_demo/page/test_gesture_widget_page.dart';
 import 'package:flutter_test_demo/page/test_gradient_circlular_progress_route.dart';
 import 'package:flutter_test_demo/page/test_list_widget_page.dart';
@@ -264,6 +265,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   ));
                 },
                 child: const Text("TestThreeTreePage")),
+            OutlinedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (ctx) => const TestCustomWidgetPage(),
+                  ));
+                },
+                child: const Text("TestCustomWidgetPage")),
 
 
           ],
