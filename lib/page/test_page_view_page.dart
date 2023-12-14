@@ -36,30 +36,20 @@ class TestPageViewPageState extends State<TestPageViewPage> {
         // the App.build method, and use it to set our appbar title.
         title: const Text("TestPageViewPage"),
       ),
-      body: DLPageView.builder(
+      body: PageView.builder(
           itemCount: list.length,
           scrollDirection: Axis.vertical,
           // allowImplicitScrolling: true,
-          physics: const DLCustomPageViewScrollPhysics(mass: 80, stiffness: 100, damping: 1),
+          physics: const BouncingScrollPhysics(),
           controller: pageController,
           onPageChanged: (index){
           },
-          onPageEndChanged: (index) async{
-            onPageEndChanged(index);
-          },
           itemBuilder: (BuildContext context, int index) {
+            log('itemBuilder index:$index');
             String name = list[index];
             return TestRoomPage(index,name);
           }),
     );
-  }
-
-  onPageEndChanged(int index) {
-    if (currentIndex == index) {
-      return;
-    }
-    log('onPageEndChanged = $index');
-    currentIndex = index;
   }
 
 }

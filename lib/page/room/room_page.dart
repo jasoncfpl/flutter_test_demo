@@ -1,5 +1,7 @@
 
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -24,6 +26,7 @@ class TestRoomPageState extends State<TestRoomPage> {
 
   @override
   void initState() {
+    log("Room initState:${widget.roomIndex}");
     controller = RoomController(widget.roomIndex);
     super.initState();
     controller?.initState();
@@ -32,12 +35,14 @@ class TestRoomPageState extends State<TestRoomPage> {
 
   @override
   void dispose() {
+    log("Room dispose:${widget.roomIndex}");
     controller?.onDispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    log("Room build:${widget.roomIndex}");
     return Container(
       width: MediaQuery.of(context).devicePixelRatio.w,
       height: 400,

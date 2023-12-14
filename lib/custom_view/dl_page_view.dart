@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/gestures.dart' show DragStartBehavior;
@@ -394,6 +395,8 @@ class _PageViewState extends State<DLPageView> {
     }
   }
 
+  Timer? timer;
+
   @override
   Widget build(BuildContext context) {
     final AxisDirection axisDirection = _getDirection(context);
@@ -417,7 +420,10 @@ class _PageViewState extends State<DLPageView> {
         }
         //滑动停止
         if (notification.depth == 0 && widget.onPageEndChanged != null && notification is ScrollEndNotification) {
-          widget.onPageEndChanged!(_lastReportedPage);
+          timer?.cancel();
+          timer = Timer(const Duration(milliseconds: 500), () {
+            widget.onPageEndChanged!(_lastReportedPage);
+          });
         }
         return false;
       },
