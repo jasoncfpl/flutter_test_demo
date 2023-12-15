@@ -9,6 +9,7 @@ import 'package:flutter_test_demo/page/test_continue_page.dart';
 import 'package:flutter_test_demo/page/test_custom_widget_page.dart';
 import 'package:flutter_test_demo/page/test_gesture_widget_page.dart';
 import 'package:flutter_test_demo/page/test_gradient_circlular_progress_route.dart';
+import 'package:flutter_test_demo/page/test_background_close_page.dart';
 import 'package:flutter_test_demo/page/test_list_widget_page.dart';
 import 'package:flutter_test_demo/page/test_loop_page.dart';
 import 'package:flutter_test_demo/page/test_page_view_page.dart';
@@ -263,7 +264,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   ));
                 },
                 child: const Text("TestCustomWidgetPage")),
-
+            OutlinedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (ctx) => BackgroundClosePage("123"),
+                  ));
+                },
+                child: const Text("TestLifecycle")),
 
           ],
         ),
