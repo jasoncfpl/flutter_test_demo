@@ -10,6 +10,7 @@ import 'package:flutter_test_demo/page/test_custom_widget_page.dart';
 import 'package:flutter_test_demo/page/test_gesture_widget_page.dart';
 import 'package:flutter_test_demo/page/test_gradient_circlular_progress_route.dart';
 import 'package:flutter_test_demo/page/test_background_close_page.dart';
+import 'package:flutter_test_demo/page/test_isolate_page.dart';
 import 'package:flutter_test_demo/page/test_list_widget_page.dart';
 import 'package:flutter_test_demo/page/test_loop_page.dart';
 import 'package:flutter_test_demo/page/test_page_view_page.dart';
@@ -139,141 +140,143 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+        child: GridView(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3, //横轴三个子widget
+                childAspectRatio: 1.0 //宽高比为1时，子widget
             ),
-            Image.asset(
-                "assets/images/message.png",
-              width: 30,
-              height: 30,
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-            OutlinedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (ctx) => const TestVisiblePage(),
-                  ));
+            children:<Widget>[
+              Text(
+                '$_counter',
+                style: Theme.of(context).textTheme.headline4,
+              ),
+              OutlinedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (ctx) => const TestVisiblePage(),
+                    ));
+                  },
+                  child: const Text("Visible Page")),
+              OutlinedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (ctx) => const ContinuePage(),
+                    ));
+                  },
+                  child: const Text("ContinuePage")),
+              OutlinedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (ctx) => const FutureLoopTestPage(),
+                    ));
+                  },
+                  child: const Text("FutureLoopTestPage")),
+              OutlinedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (ctx) => const GradientCircularProgressRoute(),
+                    ));
+                  },
+                  child: const Text("GradientCircularProgressRoute")),
+              DLDropdownButton(
+                dropdownColor: const Color(0xFF281E32),
+                items: <int>[1, 2, 3, 4].map<DLDropdownMenuItem<int>>((int value) {
+                  return DLDropdownMenuItem<int>(
+                    value: value,
+                    child: Text(
+                      "$value",
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                  );
+                }).toList(),
+                underline: const SizedBox.shrink(),
+                icon: const SizedBox(),
+                value: dropdownValue.value,
+                alwaysTop: true,
+                hint: Container(
+                  color: Colors.red,
+                ),
+                disabledHint: Container(
+                  color: Colors.green,
+                ),
+                marginTop: 40,
+                onChanged: (newValue) {
+                  dropdownValue.value = newValue as int;
                 },
-                child: const Text("Visible Page")),
-            OutlinedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (ctx) => const ContinuePage(),
-                  ));
-                },
-                child: const Text("ContinuePage")),
-            OutlinedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (ctx) => const FutureLoopTestPage(),
-                  ));
-                },
-                child: const Text("FutureLoopTestPage")),
-            OutlinedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (ctx) => const GradientCircularProgressRoute(),
-                  ));
-                },
-                child: const Text("GradientCircularProgressRoute")),
-            DLDropdownButton(
-              dropdownColor: const Color(0xFF281E32),
-              items: <int>[1, 2, 3, 4].map<DLDropdownMenuItem<int>>((int value) {
-                return DLDropdownMenuItem<int>(
-                  value: value,
+                child: Container(
+                  color: Colors.blue,
                   child: Text(
-                    "$value",
+                    "${dropdownValue.value}",
                     style: const TextStyle(color: Colors.white),
                   ),
-                );
-              }).toList(),
-              underline: const SizedBox.shrink(),
-              icon: const SizedBox(),
-              value: dropdownValue.value,
-              alwaysTop: true,
-              hint: Container(
-                color: Colors.red,
-              ),
-              disabledHint: Container(
-                color: Colors.green,
-              ),
-              marginTop: 40,
-              onChanged: (newValue) {
-                dropdownValue.value = newValue as int;
-              },
-              child: Container(
-                color: Colors.blue,
-                child: Text(
-                  "${dropdownValue.value}",
-                  style: const TextStyle(color: Colors.white),
                 ),
               ),
-            ),
-            OutlinedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (ctx) => const TestListWidgetPage(),
-                  ));
-                },
-                child: const Text("TestListWidgetPage")),
-            OutlinedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (ctx) => const TestAnimatePage(),
-                  ));
-                },
-                child: const Text("TestAnimatePage")),
-            OutlinedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (ctx) => const TestGestureDetectorPage(),
-                  ));
-                },
-                child: const Text("TestGestureDetectorPage")),
-            OutlinedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (ctx) => const TestPageViewPage(),
-                  ));
-                },
-                child: const Text("TestPageViewPage")),
-            OutlinedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (ctx) => const TestScrollPage(),
-                  ));
-                },
-                child: const Text("TestScrollPage")),
-            OutlinedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (ctx) => const TestThreeTreePage(),
-                  ));
-                },
-                child: const Text("TestThreeTreePage")),
-            OutlinedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (ctx) => const TestCustomWidgetPage(),
-                  ));
-                },
-                child: const Text("TestCustomWidgetPage")),
-            OutlinedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (ctx) => BackgroundClosePage("123"),
-                  ));
-                },
-                child: const Text("TestLifecycle")),
+              OutlinedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (ctx) => const TestListWidgetPage(),
+                    ));
+                  },
+                  child: const Text("TestListWidgetPage")),
+              OutlinedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (ctx) => const TestAnimatePage(),
+                    ));
+                  },
+                  child: const Text("TestAnimatePage")),
+              OutlinedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (ctx) => const TestGestureDetectorPage(),
+                    ));
+                  },
+                  child: const Text("TestGestureDetectorPage")),
+              OutlinedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (ctx) => const TestPageViewPage(),
+                    ));
+                  },
+                  child: const Text("TestPageViewPage")),
+              OutlinedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (ctx) => const TestScrollPage(),
+                    ));
+                  },
+                  child: const Text("TestScrollPage")),
+              OutlinedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (ctx) => const TestThreeTreePage(),
+                    ));
+                  },
+                  child: const Text("TestThreeTreePage")),
+              OutlinedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (ctx) => const TestCustomWidgetPage(),
+                    ));
+                  },
+                  child: const Text("TestCustomWidgetPage")),
+              OutlinedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (ctx) => BackgroundClosePage("123"),
+                    ));
+                  },
+                  child: const Text("TestLifecycle")),
+              OutlinedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (ctx) => const IsolatePage(),
+                    ));
+                  },
+                  child: const Text("TestIsolate")),
 
-          ],
-        ),
+            ]
+        )
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
