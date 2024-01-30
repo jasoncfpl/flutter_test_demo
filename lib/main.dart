@@ -17,6 +17,7 @@ import 'package:flutter_test_demo/page/test_page_view_page.dart';
 import 'package:flutter_test_demo/page/test_scroll_page.dart';
 import 'package:flutter_test_demo/page/test_three_tree_page.dart';
 import 'package:flutter_test_demo/page/test_visiable_page.dart';
+import 'package:flutter_test_demo/page/test_widget_lifecycle_page.dart';
 import 'package:get/get.dart';
 
 void main() {
@@ -274,6 +275,14 @@ class _MyHomePageState extends State<MyHomePage> {
                     ));
                   },
                   child: const Text("TestIsolate")),
+
+              OutlinedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (ctx) => const TestWidgetLifecyclePage(),
+                    ));
+                  },
+                  child: const Text("TestWidgetLifecyclePage")),
 
             ]
         )
