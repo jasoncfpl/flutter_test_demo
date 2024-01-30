@@ -218,63 +218,63 @@ class _MyHomePageState extends State<MyHomePage> {
                       builder: (ctx) => const TestListWidgetPage(),
                     ));
                   },
-                  child: const Text("TestListWidgetPage")),
+                  child: const Text("ListWidgetPage")),
               OutlinedButton(
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
                       builder: (ctx) => const TestAnimatePage(),
                     ));
                   },
-                  child: const Text("TestAnimatePage")),
+                  child: const Text("AnimatePage")),
               OutlinedButton(
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
                       builder: (ctx) => const TestGestureDetectorPage(),
                     ));
                   },
-                  child: const Text("TestGestureDetectorPage")),
+                  child: const Text("GestureDetectorPage")),
               OutlinedButton(
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
                       builder: (ctx) => const TestPageViewPage(),
                     ));
                   },
-                  child: const Text("TestPageViewPage")),
+                  child: const Text("PageViewPage")),
               OutlinedButton(
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
                       builder: (ctx) => const TestScrollPage(),
                     ));
                   },
-                  child: const Text("TestScrollPage")),
+                  child: const Text("ScrollPage")),
               OutlinedButton(
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
                       builder: (ctx) => const TestThreeTreePage(),
                     ));
                   },
-                  child: const Text("TestThreeTreePage")),
+                  child: const Text("ThreeTreePage")),
               OutlinedButton(
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
                       builder: (ctx) => const TestCustomWidgetPage(),
                     ));
                   },
-                  child: const Text("TestCustomWidgetPage")),
+                  child: const Text("CustomWidgetPage")),
               OutlinedButton(
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
                       builder: (ctx) => BackgroundClosePage("123"),
                     ));
                   },
-                  child: const Text("TestLifecycle")),
+                  child: const Text("Lifecycle")),
               OutlinedButton(
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
                       builder: (ctx) => const IsolatePage(),
                     ));
                   },
-                  child: const Text("TestIsolate")),
+                  child: const Text("Isolate")),
 
               OutlinedButton(
                   onPressed: () {
@@ -282,7 +282,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       builder: (ctx) => const TestWidgetLifecyclePage(),
                     ));
                   },
-                  child: const Text("TestWidgetLifecyclePage")),
+                  child: const Text("WidgetLifecyclePage")),
 
             ]
         )
