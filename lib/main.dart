@@ -21,6 +21,8 @@ import 'package:flutter_test_demo/page/test_widget_gesture_page.dart';
 import 'package:flutter_test_demo/page/test_widget_lifecycle_page.dart';
 import 'package:get/get.dart';
 
+import 'page/route/slide_up_page_route.dart';
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
@@ -279,15 +281,17 @@ class _MyHomePageState extends State<MyHomePage> {
 
               OutlinedButton(
                   onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
+                    Route route = MaterialPageRoute(
+
                       builder: (ctx) => const TestWidgetLifecyclePage(),
-                    ));
+                    );
+                    Navigator.of(context).push(route);
                   },
                   child: const Text("WidgetLifecyclePage")),
 
               OutlinedButton(
                   onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
+                    Navigator.of(context).push(SlideUpPageRoute(
                       builder: (ctx) => const TestWidgetGesturePage(),
                     ));
                   },

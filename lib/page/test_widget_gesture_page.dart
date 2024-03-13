@@ -20,39 +20,46 @@ class TestWidgetGesturePageState extends State<TestWidgetGesturePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
+    return WillPopScope(
+        onWillPop: () {
+          log("onWillPop");
+          Navigator.of(context).pop();
+          return Future.value(false);
+        },
+        child: Material(
       child: Scaffold(
-        appBar: AppBar(
-          // Here we take the value from the MyHomePage object that was created by
-          // the App.build method, and use it to set our appbar title.
-          title: const Text("GesturePageState"),
-        ),
-        body: RawGestureDetector(// 自己构造父 Widget 的手势识别映射关系
-          gestures: {
-            // 建立多手势识别器与手势识别工厂类的映射关系，从而返回可以响应该手势的 recognizer
-            MultipleTapGestureRecognizer: GestureRecognizerFactoryWithHandlers<
-                MultipleTapGestureRecognizer>(
-                  () => MultipleTapGestureRecognizer(),
-                  (MultipleTapGestureRecognizer instance) {
-                instance.onTap = () => print('parent tapped ');// 点击回调
-              },
-            )
-          },
-          child: Container(
-            color: Colors.pinkAccent,
-            child: Center(
-              child: GestureDetector(// 子视图可以继续使用 GestureDetector
-                onTap: () => print('Child tapped'),
-                child: Container(
-                  color: Colors.blueAccent,
-                  width: 200.0,
-                  height: 200.0,
+          appBar: AppBar(
+            // Here we take the value from the MyHomePage object that was created by
+            // the App.build method, and use it to set our appbar title.
+            title: const Text("GesturePageState"),
+          ),
+          body: RawGestureDetector(// 自己构造父 Widget 的手势识别映射关系
+            gestures: {
+              // 建立多手势识别器与手势识别工厂类的映射关系，从而返回可以响应该手势的 recognizer
+              MultipleTapGestureRecognizer: GestureRecognizerFactoryWithHandlers<
+                  MultipleTapGestureRecognizer>(
+                    () => MultipleTapGestureRecognizer(),
+                    (MultipleTapGestureRecognizer instance) {
+                  instance.onTap = () => print('parent tapped ');// 点击回调
+                },
+              )
+            },
+            child: Container(
+              color: Colors.pinkAccent,
+              child: Center(
+                child: GestureDetector(// 子视图可以继续使用 GestureDetector
+                  onTap: () => print('Child tapped'),
+                  child: Container(
+                    color: Colors.blueAccent,
+                    width: 200.0,
+                    height: 200.0,
+                  ),
                 ),
               ),
             ),
-          ),
-        )
+          )
       ),
+    ),
     );
   }
 
